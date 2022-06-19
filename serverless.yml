@@ -1,0 +1,26 @@
+service: desafioewally
+
+plugins:
+  - serverless-offline
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+
+  bucket: desafioewally
+
+provider:
+  name: aws
+  region: us-east-1
+  runtime: nodejs14.x
+
+functions:
+  callboleto:
+    handler: src/functions/boleto.handle
+    events:
+      - http:
+          path: /boleto/{code}
+          method: GET
+          cors: true
